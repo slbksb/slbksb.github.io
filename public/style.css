@@ -1,0 +1,231 @@
+body, html {
+    height: 100%; /* Wichtig, um sicherzustellen, dass der Hintergrund die volle Höhe abdeckt */
+    margin: 0;
+    overflow-x: hidden; /* Verhindert horizontales Scrollen */
+    overflow-y: auto; /* Ermöglicht das vertikale Scrollen */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Behält die Position bei Scrollen bei */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("hintergrund.png") no-repeat center center;
+    background-size: cover; /* Deckt den gesamten Viewport ab */
+    z-index: -1; /* Stellt sicher, dass der Hintergrund hinter dem Inhalt bleibt */
+    pointer-events: none; /* Ermöglicht Interaktionen mit Elementen vor dem Hintergrund */
+}
+
+.scrollable-content {
+    position: relative;
+    z-index: 1; /* Höher als das Pseudo-Element, damit der Inhalt darüber liegt */
+    overflow: auto;
+    height: 100%;
+}
+
+/* Alles Weitere im Body ist scrollbar */
+.content {
+    padding-bottom: 100px; /* Zusätzlicher Platz am unteren Ende für den '+'-Button */
+}
+
+
+h1 {
+	font-size: 16pt;
+	text-align: center;
+	font-style: bold;
+	text-decoration-line: underline;
+}
+
+h2 {
+	color: rgb(0, 0, 0);
+	text-align: center;
+	font-size: 24pt;
+	text-decoration-line: underline;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+
+p {
+	margin-left: 20px;
+}
+
+#notiz {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.add-note-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    margin-right: 20px; /* Größerer Abstand vom rechten Rand */
+    margin-bottom: 20px; /* Größerer Abstand vom unteren Rand */
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.delete-note-btn {
+    position: absolute; /* Position relativ zur nächsten relativ positionierten Eltern-Klasse (.note) */
+    top: 10px; /* Abstand von oben innerhalb der Notiz */
+    right: 10px; /* Abstand von rechts innerhalb der Notiz */
+    background-color: rgb(252, 87, 83);
+    color: rgb(0, 0, 0);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(223, 71, 68);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px; /* Angepasste Größe für bessere Proportionen */
+    font-weight: bold;
+    width: 24px; /* Angepasste Größe für bessere Proportionen */
+    height: 24px; /* Angepasste Größe für bessere Proportionen */
+    line-height: 22px; /* Zentriert das 'X' vertikal im Button */
+}
+
+.favorite-note-btn {
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    background-color: yellow;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+
+
+.notes-container {
+    position: relative; /* Änderung von 'absolute' zu 'relative' */
+    width: 35%; /* oder die gewünschte Breite */
+    max-width: 600px;
+    margin: 30px auto; /* Zentriert den Container und fügt oben Platz hinzu */
+    padding-bottom: 50px; /* Zusätzlicher Platz am unteren Ende, um Überlappung mit dem '+'-Button zu vermeiden */
+}
+
+.note {
+    background-color: rgba(0, 0, 0, 0.534); /* Standard-Hintergrundfarbe für alle Notizen */
+    border-radius: 25px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* Für Safari */
+    border: 2px solid rgba(0, 0, 0, 0.534);
+    color: white;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 16pt;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.note.favorite {
+    background-color: rgba(112, 97, 0, 0.486); /* Leicht durchsichtiger gelber Hintergrund */
+    backdrop-filter: blur(35px); /* Stärkerer Blur-Effekt */
+    -webkit-backdrop-filter: blur(35px);
+    border: 2px solid rgba(97, 84, 0, 0.267);
+}
+
+
+.note a {
+    color: gray; /* Ändere die Farbe nach deinen Vorlieben */
+    text-decoration: underline; /* Füge eine Unterstreichung hinzu, um anzuzeigen, dass es sich um einen Link handelt */
+}
+
+
+@media screen and (max-width: 1000px), (max-device-width: 812px) {
+    body, h1, h2, p {
+        font-size: max(2vw, 60px); /* Verwendet das Maximum von 2vw oder 18px, um sicherzustellen, dass die Schriftgröße nicht zu klein wird */
+    }
+
+    .notes-container {
+        position: relative;
+        width: 100%;
+        max-width: none;
+        margin: 0 auto;
+        padding: 0 10px 20px 10px;
+        box-sizing: border-box;
+    }
+
+    .add-note-btn {
+        width: 16vw; /* Setzt die Button-Breite auf 16% des Viewport */
+        height: 16vw; /* Stellt sicher, dass die Höhe proportional zur Breite ist, ebenfalls 16% des Viewport */
+        min-width: 80px; /* Setzt eine Minimalgröße, um Zugänglichkeit zu gewährleisten */
+        min-height: 80px;
+        font-size: 6vw; /* Setzt die Schriftgröße relativ zum Viewport, minimal jedoch 30px */
+        line-height: 16vw; /* Zentriert den Text vertikal im Button */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 50%; /* Behält die Kreisform bei */
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        background-color: #ffffff;
+    }
+    
+    
+
+    .delete-note-btn {
+        width: 9vw; /* Reduziert die Button-Breite von 12vw auf 9vw */
+        height: 9vw; /* Stellt sicher, dass die Höhe proportional zur neuen Breite ist */
+        min-width: 37.5px; /* Reduziert die Minimalgröße von 50px proportional */
+        min-height: 37.5px;
+        font-size: 3.75vw; /* Reduziert die Schriftgröße proportional, basierend auf der neuen Button-Größe */
+        line-height: 9vw; /* Zentriert den Text vertikal in der neuen Button-Größe */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%; /* Behält die Kreisform bei */
+        cursor: pointer;
+        background-color: rgb(252, 87, 83);
+        color: rgb(0, 0, 0);
+        border-style: solid;
+        border-width: 3px;
+        border-color: rgb(211, 67, 65);
+        right: 10px;
+    }
+    
+    .favorite-note-btn {
+        width: 9vw; /* Gleiche Breite wie der Delete-Button */
+        height: 9vw; /* Gleiche Höhe wie der Delete-Button */
+        min-width: 37.5px; /* Minimale Breite für Zugänglichkeit */
+        min-height: 37.5px; /* Minimale Höhe für Zugänglichkeit */
+        font-size: 3.75vw; /* Proportionale Schriftgröße für den Stern */
+        line-height: 9vw; /* Zentriert den Stern vertikal */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%; /* Kreisförmiges Design */
+        cursor: pointer;
+        background-color: yellow; /* Gelber Hintergrund */
+        color: black; /* Schwarze Schriftfarbe für den Stern */
+        border: none; /* Kein Rand */
+        position: absolute;
+        top: 10px;
+        right: 110px; /* Positioniert links neben dem Delete-Button */
+    }
+
+    .note {
+        padding: 20px;
+        font-size: max(1.5vw, 16px); /* Größere Schriftgröße mit einer Minimalgrenze */
+        min-height: 150px;
+        border-radius: 60px; /* Ändern Sie diesen Wert nach Bedarf für unterschiedliche Rundung */
+    }
+    
+}
